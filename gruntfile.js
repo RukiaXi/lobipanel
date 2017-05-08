@@ -1,11 +1,11 @@
 module.exports = function(grunt){
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
-        
-        less : {
+
+        sass : {
             development: {
                 files: {
-                    'css/<%= pkg.name %>.css': ['less/<%= pkg.name %>.less']
+                    'css/<%= pkg.name %>.css': ['scss/<%= pkg.name %>.scss']
                 }
             }
         },
@@ -70,26 +70,26 @@ module.exports = function(grunt){
                 tasks: ['copy:js']
             },
             cssDev: {
-                files: 'less/*.less',
-                tasks: ['less', 'copy:css']
+                files: 'scss/*.scss',
+                tasks: ['sass', 'copy:css']
             },
             scripts: {
                 files: ['js/*.js'],
                 tasks: ['copy:js', 'uglify']
             },
             css: {
-                files: 'less/*.less',
-                tasks: ['less', 'cssmin', 'copy:css']
+                files: 'scss/*.scss',
+                tasks: ['sass', 'cssmin', 'copy:css']
             }
         }
     });
     
-    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
     
-    grunt.registerTask('dev', ['less', 'copy', 'watch:scriptsDev', 'watch:cssDev']);
-    grunt.registerTask('default', ['less', 'cssmin', 'copy', 'uglify', 'watch']);
+    grunt.registerTask('dev', ['sass', 'copy', 'watch:scriptsDev', 'watch:cssDev']);
+    grunt.registerTask('default', ['sass', 'cssmin', 'copy', 'uglify', 'watch']);
 };

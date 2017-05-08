@@ -142,8 +142,8 @@ $(function () {
         this.innerId = me.$el.data('inner-id');
 
         this.$options = me._processInput(options);
-        me.$heading = this.$el.find('>.panel-heading');
-        me.$body = this.$el.find('>.panel-body');
+        me.$heading = this.$el.find('>.card-header');
+        me.$body = this.$el.find('>.card-block');
         me._init();
         me.$el.css('display', 'none');
         me._applyState(me.$options.state, me.$options.stateParams);
@@ -190,8 +190,8 @@ $(function () {
             if (me.$options.autoload) {
                 me.load();
             }
-            var maxWidth = 'calc(100% - ' + me.$heading.find('.dropdown-menu').children().length * me.$heading.find('.dropdown-menu li').first().outerWidth() + "px)";
-            me.$heading.find('.panel-title').css('max-width', maxWidth);
+            var maxWidth = 'calc(100% - ' + me.$heading.find('.dropdown-menu').children().length * me.$heading.find('.dropdown-item').first().outerWidth() + "px)";
+            me.$heading.find('.card-title').css('max-width', maxWidth);
 
             me._triggerEvent("init");
         },
@@ -284,7 +284,7 @@ $(function () {
                 width: panelWidth,
                 height: panelHeight
             });
-            //we give .panel-body to width and height in order .panel-body to start scroling
+            //we give .card-block to width and height in order .card-block to start scroling
             var bHeight = me._calculateBodyHeight(panelHeight);
             var bWidth = me._calculateBodyWidth(panelWidth);
             me.$body.css({
@@ -340,7 +340,7 @@ $(function () {
             }
             if (me.isPinned()) {
                 me.$body.slideUp();
-                me.$el.find('.panel-footer').slideUp();
+                me.$el.find('.card-footer').slideUp();
                 me.$el.addClass('panel-collapsed');
                 me._saveState('collapsed');
                 me._changeClassOfControl(me.$heading.find('[data-func="minimize"]'));
@@ -378,7 +378,7 @@ $(function () {
                     //after minimization we remove 'panel-expanded' class and we change icon
                     if (me.$el.hasClass('panel-expanded')) {
                         me.$el.removeClass('panel-expanded');
-                        me.$el.find('.panel-heading [data-func=expand] .' + LobiPanel.PRIVATE_OPTIONS.iconClass)
+                        me.$el.find('.card-header [data-func=expand] .' + LobiPanel.PRIVATE_OPTIONS.iconClass)
                             .removeClass(me.$options.expand.icon2)
                             .addClass(me.$options.expand.icon)
                         ;
@@ -393,8 +393,8 @@ $(function () {
                     //so we append panel into footer
                     footer.append(me.$el);
                     $('body').addClass('lobipanel-minimized');
-                    var maxWidth = 'calc(100% - ' + me.$heading.find('.dropdown-menu li>a:visible').length * me.$heading.find('.dropdown-menu li>a:visible').first().outerWidth() + "px)";
-                    me.$heading.find('.panel-title').css('max-width', maxWidth);
+                    var maxWidth = 'calc(100% - ' + me.$heading.find('.dropdown-item:visible').length * me.$heading.find('.dropdown-item:visible').first().outerWidth() + "px)";
+                    me.$heading.find('.card-title').css('max-width', maxWidth);
                     me._saveState('minimized');
                     me._triggerEvent("onMinimize");
                 });
@@ -417,7 +417,7 @@ $(function () {
             }
             if (me.isPinned()) {
                 me.$body.slideDown();
-                me.$el.find('.panel-footer').slideDown();
+                me.$el.find('.card-footer').slideDown();
                 me.$el.removeClass('panel-collapsed');
                 me._saveState('pinned');
                 me._changeClassOfControl(me.$heading.find('[data-func="minimize"]'));
@@ -460,8 +460,8 @@ $(function () {
                     }
                     $('body').removeClass('lobipanel-minimized')
                         .addClass('lobipanel-minimized');
-                    var maxWidth = 'calc(100% - ' + me.$heading.find('.dropdown-menu li').length * me.$heading.find('.dropdown-menu li').first().outerWidth() + "px)";
-                    me.$heading.find('.panel-title').css('max-width', maxWidth);
+                    var maxWidth = 'calc(100% - ' + me.$heading.find('.dropdown-item').length * me.$heading.find('.dropdown-item').first().outerWidth() + "px)";
+                    me.$heading.find('.card-title').css('max-width', maxWidth);
                     me._updateUnpinnedState();
                     me._triggerEvent("onMaximize");
                 });
@@ -831,7 +831,7 @@ $(function () {
         enableDrag: function () {
             var me = this;
             me.$el.draggable({
-                handle: '.panel-heading',
+                handle: '.card-header',
                 containment: me.$options.constrain,
                 start: function () {
                     me.$el.css('position', 'absolute');
@@ -955,7 +955,7 @@ $(function () {
         },
 
         /**
-         * Load data into .panel-body.
+         * Load data into .card-block.
          * params object is in format
          * {
          *      url: '', //Optional: load url
@@ -1018,7 +1018,7 @@ $(function () {
          */
         startTitleEditing: function () {
             var me = this;
-            var title = me.$heading.find('.panel-title').text().trim();
+            var title = me.$heading.find('.card-title').text().trim();
             var input = $('<input value="' + title + '"/>');
             input.on('keydown', function (ev) {
                 if (ev.which === 13) {
@@ -1027,7 +1027,7 @@ $(function () {
                     me.cancelTitleEditing();
                 }
             });
-            me.$heading.find('.panel-title')
+            me.$heading.find('.card-title')
                 .data('old-title', title)
                 .html("").append(input);
             input[0].focus();
@@ -1043,7 +1043,7 @@ $(function () {
          */
         isTitleEditing: function () {
             var me = this;
-            return me.$heading.find('.panel-title input').length > 0;
+            return me.$heading.find('.card-title input').length > 0;
         },
 
         /**
@@ -1053,7 +1053,7 @@ $(function () {
          */
         cancelTitleEditing: function () {
             var me = this;
-            var title = me.$heading.find('.panel-title');
+            var title = me.$heading.find('.card-title');
             title.html(title.data('old-title'))
                 .find('input').remove();
             me._changeClassOfControl(me.$heading.find('[data-func="editTitle"]'));
@@ -1071,7 +1071,7 @@ $(function () {
             if (me._triggerEvent('beforeTitleChange', input.val()) === false){
                 return me;
             }
-            me.$heading.find('.panel-title').html(input.val());
+            me.$heading.find('.card-title').html(input.val());
             input.remove();
             me._changeClassOfControl(me.$heading.find('[data-func="editTitle"]'));
             me._triggerEvent('onTitleChange', input.val());
@@ -1088,7 +1088,7 @@ $(function () {
             if ($(window).width() < 768) {
                 return me;
             }
-            var controls = me.$heading.find('.dropdown-menu>li>a');
+            var controls = me.$heading.find('.dropdown-item');
             controls.each(function (index, el) {
                 var $el = $(el);
                 $el.attr('data-toggle', 'tooltip')
@@ -1099,7 +1099,8 @@ $(function () {
             controls.each(function (ind, el) {
                 $(el).tooltip({
                     container: 'body',
-                    template: '<div class="tooltip lobipanel-tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
+                    animation: false
+                    // template: '<div class="tooltip lobipanel-tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
                 });
             });
             return me;
@@ -1112,11 +1113,11 @@ $(function () {
          */
         disableTooltips: function () {
             var me = this;
-            var $links = me.$heading.find('.dropdown-menu>li>a');
+            var $links = me.$heading.find('.dropdown-item');
             $links.each(function(ind, el){
                 var bsTooltip = $(el).data('bs.tooltip');
                 if (bsTooltip){
-                    $(el).tooltip('destroy');
+                    $(el).tooltip('dispose');
                 }
             });
             // me.$heading.find('.dropdown-menu>li>a').tooltip('destroy');
@@ -1154,13 +1155,13 @@ $(function () {
         _generateDropdown: function () {
             var me = this;
             return $('<div class="dropdown"></div>')
-                .append('<ul class="dropdown-menu dropdown-menu-right"></ul>')
+                .append('<div class="dropdown-menu dropdown-menu-right"></div>')
                 .append('<div class="dropdown-toggle" data-toggle="dropdown"><span class="' + LobiPanel.PRIVATE_OPTIONS.iconClass + ' ' + me.$options.toggleIcon + '"></div>');
         },
         _generateEditTitle: function () {
             var me = this;
             var options = me.$options.editTitle;
-            var control = $('<a data-func="editTitle"></a>');
+            var control = $('<a data-func="editTitle" class="dropdown-item"></a>');
             control.append('<i class="' + LobiPanel.PRIVATE_OPTIONS.iconClass + ' ' + options.icon + '"></i>');
             if (options.tooltip && typeof options.tooltip === 'string') {
                 control.append('<span class="control-title">' + options.tooltip + '</span>');
@@ -1168,7 +1169,7 @@ $(function () {
             }
 
             me._attachEditTitleClickListener(control);
-            return $('<li></li>').append(control);
+            return control;
         },
         _attachEditTitleClickListener: function (control) {
             var me = this;
@@ -1197,14 +1198,14 @@ $(function () {
         _generateUnpin: function () {
             var me = this;
             var options = me.$options.unpin;
-            var control = $('<a data-func="unpin"></a>');
+            var control = $('<a data-func="unpin" class="dropdown-item"></a>');
             control.append('<i class="' + LobiPanel.PRIVATE_OPTIONS.iconClass + ' ' + options.icon + '"></i>');
             if (options.tooltip && typeof options.tooltip === 'string') {
                 control.append('<span class="control-title">' + options.tooltip + '</span>');
                 control.attr('data-tooltip', options.tooltip);
             }
             me._attachUnpinClickListener(control);
-            return $('<li></li>').append(control);
+            return control;
         },
         _attachUnpinClickListener: function (control) {
             var me = this;
@@ -1220,14 +1221,14 @@ $(function () {
         _generateReload: function () {
             var me = this;
             var options = me.$options.reload;
-            var control = $('<a data-func="reload"></a>');
+            var control = $('<a data-func="reload" class="dropdown-item"></a>');
             control.append('<i class="' + LobiPanel.PRIVATE_OPTIONS.iconClass + ' ' + options.icon + '"></i>');
             if (options.tooltip && typeof options.tooltip === 'string') {
                 control.append('<span class="control-title">' + options.tooltip + '</span>');
                 control.attr('data-tooltip', options.tooltip);
             }
             me._attachReloadClickListener(control);
-            return $('<li></li>').append(control);
+            return control;
         },
         _attachReloadClickListener: function (control) {
             var me = this;
@@ -1242,14 +1243,14 @@ $(function () {
         _generateMinimize: function () {
             var me = this;
             var options = me.$options.minimize;
-            var control = $('<a data-func="minimize"></a>');
+            var control = $('<a data-func="minimize" class="dropdown-item"></a>');
             control.append('<i class="' + LobiPanel.PRIVATE_OPTIONS.iconClass + ' ' + options.icon + '"></i>');
             if (options.tooltip && typeof options.tooltip === 'string') {
                 control.append('<span class="control-title">' + options.tooltip + '</span>');
                 control.attr('data-tooltip', options.tooltip);
             }
             me._attachMinimizeClickListener(control);
-            return $('<li></li>').append(control);
+            return control;
         },
         _attachMinimizeClickListener: function (control) {
             var me = this;
@@ -1265,14 +1266,14 @@ $(function () {
         _generateExpand: function () {
             var me = this;
             var options = me.$options.expand;
-            var control = $('<a data-func="expand"></a>');
+            var control = $('<a data-func="expand" class="dropdown-item"></a>');
             control.append('<i class="' + LobiPanel.PRIVATE_OPTIONS.iconClass + ' ' + options.icon + '"></i>');
             if (options.tooltip && typeof options.tooltip === 'string') {
                 control.append('<span class="control-title">' + options.tooltip + '</span>');
                 control.attr('data-tooltip', options.tooltip);
             }
             me._attachExpandClickListener(control);
-            return $('<li></li>').append(control);
+            return control;
         },
         _attachExpandClickListener: function (control) {
             var me = this;
@@ -1288,14 +1289,14 @@ $(function () {
         _generateClose: function () {
             var me = this;
             var options = me.$options.close;
-            var control = $('<a data-func="close"></a>');
+            var control = $('<a data-func="close" class="dropdown-item"></a>');
             control.append('<i class="' + LobiPanel.PRIVATE_OPTIONS.iconClass + ' ' + options.icon + '"></i>');
             if (options.tooltip && typeof options.tooltip === 'string') {
                 control.append('<span class="control-title">' + options.tooltip + '</span>');
                 control.attr('data-tooltip', options.tooltip);
             }
             me._attachCloseClickListener(control);
-            return $('<li></li>').append(control);
+            return control;
         },
         _attachCloseClickListener: function (control) {
             var me = this;
@@ -1412,7 +1413,7 @@ $(function () {
         },
         _calculateBodyHeight: function (h) {
             var me = this;
-            return h - me.$heading.outerHeight() - me.$el.find('.panel-footer').outerHeight();
+            return h - me.$heading.outerHeight() - me.$el.find('.card-footer').outerHeight();
         },
         _calculateBodyWidth: function (w) {
             var me = this;
@@ -1482,7 +1483,7 @@ $(function () {
             parent.sortable({
                 connectWith: '.lobipanel-parent-sortable',
                 items: '.lobipanel-sortable',
-                handle: '.panel-heading',
+                handle: '.card-header',
                 cursor: 'move',
                 placeholder: 'lobipanel-placeholder',
                 forcePlaceholderSize: true,
@@ -1735,7 +1736,7 @@ $(function () {
         bodyHeight: 'auto',
         //This will enable tooltips on panel controls
         tooltips: true,
-        toggleIcon: 'glyphicon glyphicon-cog',
+        toggleIcon: 'fa fa-cog',
         expandAnimation: 100,
         collapseAnimation: 100,
         state: 'pinned', // Initial state of the panel. Available options: pinned, unpinned, collapsed, minimized, fullscreen
@@ -1745,30 +1746,30 @@ $(function () {
                          // and apply them when you reload the browser
         constrain: 'document', // 'parent', 'document', 'window'
         unpin: {
-            icon: 'glyphicon glyphicon-move', //You can user glyphicons if you do not want to use font-awesome
+            icon: 'fa fa-arrows', //You can user glyphicons if you do not want to use font-awesome
             tooltip: 'Unpin'               //tooltip text, If you want to disable tooltip, set it to false
         },
         reload: {
-            icon: 'glyphicon glyphicon-refresh', //You can user glyphicons if you do not want to use font-awesome
+            icon: 'fa fa-refresh', //You can user glyphicons if you do not want to use font-awesome
             tooltip: 'Reload'           //tooltip text, If you want to disable tooltip, set it to false
         },
         minimize: {
-            icon: 'glyphicon glyphicon-minus', //icon is shown when panel is not minimized
-            icon2: 'glyphicon glyphicon-plus', //icon2 is shown when panel is minimized
+            icon: 'fa fa-minus', //icon is shown when panel is not minimized
+            icon2: 'fa fa-plus', //icon2 is shown when panel is minimized
             tooltip: 'Minimize'         //tooltip text, If you want to disable tooltip, set it to false
         },
         expand: {
-            icon: 'glyphicon glyphicon-resize-full', //icon is shown when panel is not on full screen
-            icon2: 'glyphicon glyphicon-resize-small', //icon2 is shown when pane is on full screen state
+            icon: 'fa fa-expand', //icon is shown when panel is not on full screen
+            icon2: 'fa fa-compress', //icon2 is shown when pane is on full screen state
             tooltip: 'Fullscreen'       //tooltip text, If you want to disable tooltip, set it to false
         },
         close: {
-            icon: 'glyphicon glyphicon-remove', //You can user glyphicons if you do not want to use font-awesome
+            icon: 'fa fa-times', //You can user glyphicons if you do not want to use font-awesome
             tooltip: 'Close'            //tooltip text, If you want to disable tooltip, set it to false
         },
         editTitle: {
-            icon: 'glyphicon glyphicon-pencil',
-            icon2: 'glyphicon glyphicon-floppy-disk',
+            icon: 'fa fa-pencil',
+            icon2: 'fa fa-floppy-o',
             tooltip: 'Edit title'
         },
 
