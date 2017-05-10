@@ -1,6 +1,6 @@
 {
   "name": "lobipanel-bootstrap-v4",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "jQuery plugin for bootstrap panels. It extends panels with several common and useful functions.",
   "repository": {
     "type": "git",
