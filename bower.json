@@ -1,5 +1,5 @@
 {
-  "name": "lobipanel",
+  "name": "lobipanel-bootstrap-v4",
   "description": "jQuery plugin for bootstrap panels. It extends panels with several common and useful functions",
   "main": [
     "dist/css/lobipanel.min.css",
@@ -21,7 +21,7 @@
     "ajax loading panels",
     "localStorage"
   ],
-  "homepage": "https://github.com/arboshiki/lobibox",
+  "homepage": "https://github.com/michiweber/lobipanel",
   "moduleType": [],
   "private": true,
   "ignore": [

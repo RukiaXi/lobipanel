@@ -116,6 +116,29 @@
                     </div>
                 </div>
             </div>
+            <!--Unpinned example-->
+            <div>
+                <h3>Unpinned example</h3>
+                <div class="bs-example">
+                    <div class="card lobipanel-9">
+                        <div class="card-header">
+                            <h4 class="card-title">Panel title (Unpinned)</h4>
+                        </div>
+                        <div class="card-block">Lorem ipsum dolor sit amet concealed leaf shah proper council binary.
+                            Concealed assured affairs faces, finish easily glows shouted faint. Sentence
+                            islands spouting we unbeguiled, faces concealed. Diam rays countries, faces
+                            fames peeling bind wary catch solomon, painting, they beats evil. Failing
+                            newer landscapes steal retinues vidi rays echoes sheltered evil. Veins
+                            concealed spouting obtaining delight wild. Venenatis failing wreaths shouted
+                            countries wild, privilege climbing.
+                            <p></p>
+                            <div class="highlight">
+                                <pre><code>$('selector').lobiPanel({state: 'unpinned'});</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!--Multiple lobiPanels-->
             <div id="lobipanel-multiple">
                 <h3>Multiple panels with drag & drop</h3>
@@ -197,6 +220,9 @@
             minHeight: 300,
             maxWidth: 600,
             maxHeight: 480
+        });
+        $('.lobipanel-9').lobiPanel({
+            state: 'unpinned'
         });
         $('#lobipanel-multiple').find('.card').lobiPanel({
             sortable: true

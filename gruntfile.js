@@ -5,7 +5,7 @@ module.exports = function(grunt){
         sass : {
             development: {
                 files: {
-                    'css/<%= pkg.name %>.css': ['scss/<%= pkg.name %>.scss']
+                    'css/lobipanel.css': ['scss/lobipanel.scss']
                 }
             }
         },
@@ -16,7 +16,7 @@ module.exports = function(grunt){
                     {
                         expand: true,
                         cwd: 'css',
-                        src: '<%= pkg.name %>.css',
+                        src: 'lobipanel.css',
                         dest: 'dist/css',
                         ext: '.min.css'
                     }

@@ -164,7 +164,6 @@ $(function () {
                 me.storage = JSON.parse(me.storage) || {};
             }
             var opts = me._getOptionsFromAttributes();
-//            window.console.log(opts);
             options = $.extend({}, $.fn.lobiPanel.DEFAULTS, me.storage, options, opts);
             var objects = ['unpin', 'reload', 'expand', 'minimize', 'close', 'editTitle'];
             for (var i = 0; i < objects.length; i++) {
@@ -180,7 +179,6 @@ $(function () {
             me.$el.addClass('lobipanel');
 
             me.$heading.append(me._generateControls());
-//------------------------------------------------------------------------------
             var parent = me.$el.parent();
             me._appendInnerIdToParent(parent, me.innerId);
             me._enableSorting();
@@ -1514,9 +1512,6 @@ $(function () {
                     lobiPanel._saveState('pinned', {index: index});
                 }
             });
-            // me._saveState('pinned', {index: panel.index()})
-            console.log("Save indices in localstorage");
-
         },
         _removeInnerIdFromParent: function (innerId) {
             var me = this;
@@ -1578,7 +1573,6 @@ $(function () {
         },
         _saveState: function (state, params) {
             var me = this;
-            console.log("Save state ", state, params);
             if (!me.hasRandomId && me.$options.stateful) {
                 me.storage.state = state;
                 if (params) {
@@ -1601,8 +1595,10 @@ $(function () {
                     break;
                 case 'unpinned':
                     me.unpin();
-                    me.setPosition(params.left, params.top, 0);
-                    me.setSize(params.width, params.height, 0);
+                    if (!!params) {
+                        me.setPosition(params.left, params.top, 0);
+                        me.setSize(params.width, params.height, 0);
+                    }
                     break;
                 case 'minimized':
                     me.unpin();
