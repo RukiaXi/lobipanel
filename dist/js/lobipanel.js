@@ -393,7 +393,7 @@ $(function () {
                     //so we append panel into footer
                     footer.append(me.$el);
                     $('body').addClass('lobipanel-minimized');
-                    var maxWidth = 'calc(100% - ' + me.$heading.find('.dropdown-item:visible').length * me.$heading.find('.dropdown-item:visible').first().outerWidth() + "px)";
+                    var maxWidth = 'calc(100% - ' + me.$heading.find('.dropdown-item>a:visible').length * me.$heading.find('.dropdown-item>a:visible').first().outerWidth() + "px)";
                     me.$heading.find('.card-title').css('max-width', maxWidth);
                     me._saveState('minimized');
                     me._triggerEvent("onMinimize");
@@ -1088,7 +1088,7 @@ $(function () {
             if ($(window).width() < 768) {
                 return me;
             }
-            var controls = me.$heading.find('.dropdown-item');
+            var controls = me.$heading.find('.dropdown-item>a');
             controls.each(function (index, el) {
                 var $el = $(el);
                 $el.attr('data-toggle', 'tooltip')
@@ -1099,8 +1099,7 @@ $(function () {
             controls.each(function (ind, el) {
                 $(el).tooltip({
                     container: 'body',
-                    animation: false
-                    // template: '<div class="tooltip lobipanel-tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
+                    template: '<div class="tooltip lobipanel-tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
                 });
             });
             return me;
@@ -1113,11 +1112,11 @@ $(function () {
          */
         disableTooltips: function () {
             var me = this;
-            var $links = me.$heading.find('.dropdown-item');
+            var $links = me.$heading.find('.dropdown-item>a');
             $links.each(function(ind, el){
                 var bsTooltip = $(el).data('bs.tooltip');
                 if (bsTooltip){
-                    $(el).tooltip('dispose');
+                    $(el).tooltip('destroy');
                 }
             });
             // me.$heading.find('.dropdown-menu>li>a').tooltip('destroy');
