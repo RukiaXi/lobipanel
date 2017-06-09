@@ -123,6 +123,7 @@ $.fn.enableSelection = function () {
         .off('selectstart');
 };
 
+var cloningEnabled = false;
 $(function () {
     var STORAGE_PREFIX = 'lobipanel_';
 
@@ -518,7 +519,9 @@ $(function () {
                     width: me.$el.width(),
                     height: me.$el.height()
                 });
-                $('body').append(me.$el);
+                if (cloningEnabled) {
+                    $('body').append(me.$el);
+                }
                 //If we are expanding panel to full screen from footer and in footer there are no more elements
                 //remove footer also
                 var footer = me._getFooterForMinimizedPanels();
